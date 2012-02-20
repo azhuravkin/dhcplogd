@@ -1,0 +1,26 @@
+1) Create database:
+
+mysql> CREATE DATABASE `dhcp`;
+mysql> GRANT ALL PRIVILEGES ON `dhcp`.* TO `dhcp`@`localhost` IDENTIFIED BY 'somepass';
+mysql> quit
+
+2) Create tables:
+
+mysql -udhcp -psomepass dhcp < /usr/share/doc/dhcplogd-1/dhcplogd.sql
+
+3) Modify /etc/dhcplogd.conf:
+
+server: localhost
+username: dhcp
+password: somepass
+database: dhcp
+port: 3306
+listen: 1067
+logfile: /var/log/dhcpd/dhcpd.log
+
+4) Create directory for log files:
+mkdir /var/log/dhcpd
+
+5) Start dhcplogd:
+
+service dhcplogd start
